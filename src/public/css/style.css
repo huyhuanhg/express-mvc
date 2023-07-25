@@ -1,0 +1,260 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+  background-color: #264653;
+  color: #fff;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+::selection {
+  background: #f4a261;
+  color: #fff;
+}
+
+#root {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 20px;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 0 20px;
+}
+
+.heading {
+  font-size: 3.5rem;
+}
+
+header {
+  padding: 10px 50px;
+  background: #183541;
+}
+
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav ul {
+  display: flex;
+  font-size: 1.4rem;
+}
+
+nav ul li:not(:last-child) {
+  margin-right: 6px;
+}
+
+nav ul li a {
+  display: inline-block;
+  padding: 4px 8px;
+}
+
+.description.next-phase {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 4rem;
+}
+
+.container {
+  margin: 20px 5px;
+  height: 80vh;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: flex-start;
+  border-radius: 10px;
+}
+
+.container .content-todo {
+  flex: 1;
+}
+
+.add-todo {
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.content-header {
+  font-size: 2rem;
+  color: #000;
+  width: 100%;
+  padding: 5px 0;
+}
+
+.content-header::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #000;
+  margin-top: 4px;
+}
+
+.content-header .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content-header .control-group {
+  display: flex;
+  gap: 8px;
+}
+
+.content-header .control-group button[type="second"] {
+  background-color: rgb(77, 77, 77);
+}
+
+.add-todo input {
+  width: 100%;
+  height: 35px;
+  padding-left: 10px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  outline: none;
+  color: #274653;
+  border: none;
+  border-bottom: 1px solid #274653;
+}
+
+.add-todo button {
+  border: none;
+  width: 130px;
+  height: 35px;
+  cursor: pointer;
+  background-color: #274653;
+  color: #fff;
+  font-size: 1.6rem;
+  border-radius: 5px;
+}
+
+.list-todo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: max-content;
+  gap: 15px;
+  padding: 15px;
+  overflow: auto;
+  position: relative;
+}
+
+.list-todo::-webkit-scrollbar {
+  display: none;
+}
+
+.list-todo .no-data {
+  color: #023047;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.list-todo-item {
+  display: flex;
+  align-items: flex-start;
+  user-select: none;
+  cursor: pointer;
+  padding: 10px;
+  background-color: rgb(248, 248, 248);
+  border-radius: 5px;
+  color: #023047;
+}
+
+.list-todo-item:hover {
+  background-color: #274653;
+  box-shadow: 1px 2px 30px rgb(164, 164, 164);
+  color: #fff;
+}
+
+.list-todo-item-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-left: 5px;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.list-todo-item .status {
+  margin: 1.5px;
+  min-width: 15px;
+  min-height: 15px;
+  background-color: rgb(255, 0, 102);
+  border-radius: 50%;
+}
+
+.list-todo-item .status-complete {
+  background-color: #1d9515;
+}
+
+.sidebar {
+  height: 100%;
+  background-color: #2a9d8f;
+  padding: 10px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.sidebar-item {
+  margin-bottom: 15px;
+}
+
+.sidebar-item svg {
+  color: #fff;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 7px;
+  border: 2px solid #fff;
+}
+
+.sidebar-item svg:hover {
+  transform: scale(120%);
+  transition: 0.15s ease-in;
+}
+
+.sidebar .btn-delete {
+  bottom: 0px;
+  position: absolute;
+}
