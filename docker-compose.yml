@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  web:
+    container_name: express-mvc_web
+    image: node:16-alpine3.15
+    tty: true
+    ports:
+      - 11000:3000
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - node_modules-store:/var/www/node_modules
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
+
+  db:
+    container_name: express-mvc_db
+    image: mysql:oracle
+    ports:
+      - "12306:3306"
+    volumes:
+      - ./.docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./.docker/mysql/charset.cnf:/etc/mysql/conf.d/charset.cnf
+      - ./.db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=express-mvc
+
+volumes:
+  redis-data:
+    driver: local
+  node_modules-store:
