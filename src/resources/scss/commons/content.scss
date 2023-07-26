@@ -1,0 +1,33 @@
+section.main {
+  display: flex;
+  align-items: flex-start;
+  height: 100%;
+
+  aside {
+    flex: 1;
+
+    .header {
+      position: relative;
+      padding: 10px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+
+      &::after {
+        position: absolute;
+        display: block;
+        content: '';
+        height: 1px;
+        width: calc(100% - 60px);
+        bottom: 0;
+        background: #000;
+      }
+    }
+  }
+
+  article {
+    width: 100%;
+    padding: 20px 30px;
+  }
+}

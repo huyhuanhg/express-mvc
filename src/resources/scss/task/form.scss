@@ -1,0 +1,13 @@
+#task_form_page {
+  .title {
+    font-size: 2rem;
+    color: #000;
+    width: 100%;
+    padding: 5px 0;
+  }
+
+  .control-group {
+    display: flex;
+    gap: 8px;
+  }
+}

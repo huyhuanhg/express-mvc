@@ -1,54 +1,68 @@
-<main class="container">
-  <div class="content-todo">
-    <div class="add-todo">
-      <div class="content-header">
-        <div class="header">
-          <div class="title">Create Task</div>
-          <div class="control-group">
-            <div class="btn-wrapper"><button type="second">Cancel</button></div>
-            <div class="btn-wrapper"><button>Create</button></div>
-          </div>
-        </div>
+<section class="main" id="task_form_page">
+  <aside>
+    <div class="header">
+      <div class="title">Create Task</div>
+      <div class="control-group">
+        <div class="btn-wrapper"><button type="second" class="btn btn-second">Cancel</button></div>
+        <div class="btn-wrapper"><button class="btn">Submit</button></div>
       </div>
     </div>
-    <div class="form">
-      <form action="/task" method="POST">
-        <div class="form-group">
-          <label for="task_name_field">Task Name</label>
-          <input type="text" name="name" id="task_name_field" autocomplete="off" />
-        </div>
-        <div class="form-group">
-          <label for="task_policy_field">Policy</label>
-          <select name="policy" id="task_policy_field">
-            <option value="LOW">Low</option>
-            <option value="MEDIUM">Medium</option>
-            <option value="HIGHT">Hight</option>
-            <option value="HIGHEST">Highest</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="task_status_field">Status</label>
-          <select name="status" id="task_status_field">
-            <option value="TODO">To Do</option>
-            <option value="INPROGRESS">In Progress</option>
-            <option value="DONE">Done</option>
-            <option value="PENDING">Pending</option>
-            <option value="ABORT">Abort</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="task_start_date_field">Start Date</label>
-          <input type="text" name="start_date" id="task_start_date_field" />
-        </div>
-        <div class="form-group">
-          <label for="task_due_date_field">Due Date</label>
-          <input type="text" name="due_date" id="task_due_date_field" />
-        </div>
-        <div class="form-group">
-          <label for="task_description_field">Description</label>
-          <textarea name="description" id="task_description_field" ></textarea>
-        </div>
-      </form>
-    </div>
-  </div>
-</main>
+    <article>
+      <div class="form-wrapper">
+        <form class="form" action="/task" method="POST">
+          <div class="form__group">
+            <label class="form__label" for="task_name_field">Task Name</label>
+            <input class="form__control" type="text" name="name" id="task_name_field" autocomplete="off" />
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form__group">
+                <label class="form__label" for="task_policy_field">Policy</label>
+                <select class="form__control" name="policy" id="task_policy_field">
+                  <option value="LOW">Low</option>
+                  <option value="MEDIUM">Medium</option>
+                  <option value="HIGHT">Hight</option>
+                  <option value="HIGHEST">Highest</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form__group">
+                <label class="form__label" for="task_status_field">Status</label>
+                <select class="form__control" name="status" id="task_status_field">
+                  <option value="TODO">To Do</option>
+                  <option value="INPROGRESS">In Progress</option>
+                  <option value="DONE">Done</option>
+                  <option value="PENDING">Pending</option>
+                  <option value="ABORT">Abort</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="task_assign_field">Assign</label>
+            <input class="form__control" type="text" name="assign" id="task_assign_field" />
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form__group">
+                <label class="form__label" for="task_start_date_field">Start Date</label>
+                <input class="form__control" type="text" name="start_date" id="task_start_date_field" />
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form__group">
+                <label class="form__label" for="task_due_date_field">Due Date</label>
+                <input class="form__control" type="text" name="due_date" id="task_due_date_field" />
+              </div>
+            </div>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="task_description_field">Description</label>
+            <textarea class="form__control rsz-none" name="description" id="task_description_field" rows="8"></textarea>
+          </div>
+        </form>
+      </div>
+    </article>
+  </aside>
+</section>

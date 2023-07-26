@@ -1,6 +1,6 @@
-<main class="container">
+<section class="main" id="task_page">
   <div class="sidebar">
-    <div class="sidebar-item btn-all">
+    <div class="sidebar__item btn-all">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="36"
@@ -13,7 +13,7 @@
         />
       </svg>
     </div>
-    <div class="sidebar-item btn-complete">
+    <div class="sidebar__item btn-complete">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="36"
@@ -26,7 +26,7 @@
         />
       </svg>
     </div>
-    <div class="sidebar-item btn-pending">
+    <div class="sidebar__item btn-pending">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="36"
@@ -39,7 +39,7 @@
         />
       </svg>
     </div>
-    <div class="sidebar-item btn-delete">
+    <div class="sidebar__item btn-delete">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="36"
@@ -55,11 +55,11 @@
       </svg>
     </div>
   </div>
-  <div class="content-todo">
-    <div class="add-todo">
-      <input type="text" placeholder="The name of the job" />
-      <button accesskey="h" class="btn-add">Add</button>
+  <aside>
+    <div class="header">
+      <input class="search" type="text" placeholder="Search job here" />
+      <button accesskey="h" class="btn">Add</button>
     </div>
-    <div class="list-todo"></div>
-  </div>
-</main>
+    <article></article>
+  </aside>
+</section>

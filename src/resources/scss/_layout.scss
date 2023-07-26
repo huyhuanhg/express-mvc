@@ -1,0 +1,40 @@
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 20px;
+}
+
+header {
+  background: #183541;
+  .header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo {
+      font-size: 2.5rem;
+    }
+  }
+}
+
+nav ul {
+  display: flex;
+  font-size: 1.4rem;
+  li {
+    a {
+      display: inline-block;
+      padding: 4px 8px;
+    }
+
+    &:not(:last-child) {
+      margin-right: 6px;
+    }
+  }
+}
+
+.content {
+  height: calc(100vh - 115px);
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  margin-top: 16px;
+}

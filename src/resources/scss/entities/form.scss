@@ -1,0 +1,39 @@
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.col-12 {
+  flex: .5;
+}
+
+.form {
+  &__group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.5rem;
+
+    &.horizon {
+      flex-direction: row;
+    }
+
+    &.error {
+      &__err-msg {
+        position: absolute;
+        color: #f00;
+      }
+    }
+  }
+
+  &__label {
+    margin-bottom: .5rem;
+    font-size: 1.1rem;
+  }
+
+  &__control {
+    outline: none;
+    padding: 6px 12px;
+    font-size: 1.2rem;
+  }
+}
