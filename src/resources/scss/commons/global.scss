@@ -48,6 +48,10 @@ li {
   color: #fff;
   font-size: 1.2rem;
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .btn-second {
