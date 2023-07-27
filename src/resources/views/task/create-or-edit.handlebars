@@ -34,7 +34,7 @@
                   <option value="INPROGRESS">In Progress</option>
                   <option value="DONE">Done</option>
                   <option value="PENDING">Pending</option>
-                  <option value="ABORT">Abort</option>
+                  <option value="SKIP">Skip</option>
                 </select>
               </div>
             </div>
@@ -47,13 +47,13 @@
             <div class="col-12">
               <div class="form__group">
                 <label class="form__label" for="task_start_date_field">Start Date</label>
-                <input class="form__control" type="text" name="start_date" id="task_start_date_field" />
+                <input class="form__control" type="datetime-local" name="start_date" id="task_start_date_field" />
               </div>
             </div>
             <div class="col-12">
               <div class="form__group">
                 <label class="form__label" for="task_due_date_field">Due Date</label>
-                <input class="form__control" type="text" name="due_date" id="task_due_date_field" />
+                <input class="form__control" type="datetime-local" name="due_date" id="task_due_date_field" />
               </div>
             </div>
           </div>
