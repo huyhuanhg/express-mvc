@@ -1,8 +1,14 @@
 import { Request, Response } from "express-serve-static-core";
 
 class TaskController {
+  _taskService = require('../../services/TaskService');
+
   index(req: Request, res: Response) {
-    res.render("task");
+    const tasks = this._taskService.getFilteredPaginator();
+
+    console.log('tasks :>> ', tasks);
+
+    res.render("task", { tasks });
   }
 
   create(req: Request, res: Response) {

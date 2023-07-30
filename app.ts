@@ -14,8 +14,8 @@ const app: express.Application = express();
 app.use(express.static(path.join(__dirname, "./src/public")));
 
 // Load engine
-app.engine("handlebars", engine());
-app.set("view engine", "handlebars");
+app.engine(".hbs", engine({extname: '.hbs'}));
+app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "./src/resources/views"));
 
 if (process.env.NODE_ENV === "development") {
