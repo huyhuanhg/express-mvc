@@ -2,19 +2,19 @@ import _, { keys } from "lodash";
 import pluralize from "pluralize";
 import { WhereBuilderInterface } from "./interfaces/WhereBuilderInterface";
 import BuilderHelper from "./helper/sql";
-const { default: defaultConnection, connections } = require('../../config/database')
+import { default_deriver, connections } from '../../config/database'
 
 class DB implements WhereBuilderInterface {
   #mysql = require("../connection");
   #whereBuilder = require("./WhereBuilder");
-  #connection = defaultConnection;
+  #connection = default_deriver;
 
   #table: string;
   #select: string[] = ["*"];
   #joins: any;
   #groups: any;
   #havings: any;
-  #orders: Record<'field' | 'direction', string>[] = [];
+  #orders: Record<"field" | "direction", string>[] = [];
   #limit: any;
   #offset: any;
 
@@ -24,7 +24,7 @@ class DB implements WhereBuilderInterface {
 
   connection(connection: string) {
     if (!connections.connection) {
-      throw new Error('Database connect do not support!')
+      throw new Error("Database connect do not support!");
     }
 
     this.#connection = connection;
@@ -110,8 +110,8 @@ class DB implements WhereBuilderInterface {
 
   rightJoin() {}
 
-  order(field: string, direction: 'DESC' | 'ASC' = 'ASC') {
-    this.#orders.push({field, direction});
+  order(field: string, direction: "DESC" | "ASC" = "ASC") {
+    this.#orders.push({ field, direction });
 
     return this;
   }
@@ -124,66 +124,106 @@ class DB implements WhereBuilderInterface {
     this.#offset = offset;
   }
 
-  count(select: string = '*') {
+  count(select: string = "*") {
     return this.#mysql(this.#connection).query(this.#parseGet(select));
   }
 
   get() {
-    return this.#mysql(this.#connection).query(this.#parseGet());
+    console.log('query :>> ', this.#parseGet());
+    // return this.#mysql(this.#connection).query(this.#parseGet());
   }
 
-  update(values: Record<string, number|string>) {
+  insert(
+    values: Record<string, number | string> | Record<string, number | string>[]
+  ) {
+    const formatData: { keys: string[]; values: (string | number)[][] } =
+      this.#formatInsertData(values);
+    console.log('formatData :>> ', formatData);
+    const query = `INSERT INTO ${
+      this.#table
+    } ${BuilderHelper.prepareStringValue(
+      formatData.keys,
+      "`"
+    )} VALUES ${formatData.values
+      .map((v) => BuilderHelper.prepareStringValue(v))
+      .join(", ")};`;
+
+      console.log('query :>> ', query);
+    // return this.#mysql(this.#connection).query(query);
+  }
+
+  update(values: Record<string, number | string>) {
     const formatData: string[] = this.#formatUpdateData(values);
 
     const whereRaw = this.#whereBuilder.parse();
-    const whereSql = whereRaw ? ` WHERE ${whereRaw}` : '';
+    const whereSql = whereRaw ? ` WHERE ${whereRaw}` : "";
 
-    const query = `UPDATE ${this.#table} SET ${formatData.join(', ')}${whereSql};`
+    const query = `UPDATE ${this.#table} SET ${formatData.join(
+      ", "
+    )}${whereSql};`;
 
-    return this.#mysql(this.#connection).query(query);
+    console.log('query :>> ', query);
+    // return this.#mysql(this.#connection).query(query);
   }
 
-  insert(values: Record<string, number|string> | Record<string, number|string>[]) {
-    const formatData: { keys: string[], values: (string|number)[][] } = this.#formatInsertData(values);
+  delete() {
+    const whereRaw = this.#whereBuilder.parse();
+    const whereSql = whereRaw ? ` WHERE ${whereRaw}` : "";
 
-    const query = `INSERT INTO ${this.#table} ${BuilderHelper.prepareStringValue(formatData.keys, '`')} VALUES ${formatData.values.map(v => BuilderHelper.prepareStringValue(v)).join(', ')};`
+    const query = `DELETE FROM ${this.#table}${whereSql};`;
 
-    return this.#mysql(this.#connection).query(query);
+    console.log('query :>> ', query);
+    // return this.#mysql(this.#connection).query(query);
   }
 
   #parseGet(countField?: string) {
     const selectSql = countField
-      ? `COUNT(\`${countField}\`)`
-      : this.#select.map(select => `\`${select}\``).join(", ");
+      ? `COUNT(${countField})`
+      : this.#select.map((select) => `${select}`).join(", ");
 
     const whereRaw = this.#whereBuilder.parse();
-    const whereSql = whereRaw ? ` WHERE ${whereRaw}` : '';
+    const whereSql = whereRaw ? ` WHERE ${whereRaw}` : "";
 
     const orderBySql = _.isEmpty(this.#orders)
-      ? ''
-      : ` ORDER BY ${this.#orders.map(orderBy => `${orderBy.field} ${orderBy.direction}`).join(', ')}`;
+      ? ""
+      : ` ORDER BY ${this.#orders
+          .map((orderBy) => `${orderBy.field} ${orderBy.direction}`)
+          .join(", ")}`;
 
-    const limitSql = this.#limit ? ` LIMIT ${this.#limit}` : '';
-    const offsetSql = this.#offset ? ` OFFSET ${this.#offset}` : '';
+    const limitSql = this.#limit ? ` LIMIT ${this.#limit}` : "";
+    const offsetSql = this.#offset ? ` OFFSET ${this.#offset}` : "";
 
-    return `SELECT ${selectSql} FROM ${this.#table}${whereSql}${orderBySql}${limitSql}${offsetSql};`;
+    return `SELECT ${selectSql} FROM ${
+      this.#table
+    }${whereSql}${orderBySql}${limitSql}${offsetSql};`;
   }
 
-  #formatInsertData(values: Record<string, number|string> | Record<string, number|string>[]) {
-    const keys: string[] = _.isObject(values) ? Object.keys(values) : Object.keys(values[0]);
-    const valueResult: (string|number)[] | (string|number)[][] =
-      _.isObject(values) ?
-      [Object.values(values)] :
-      (values as (number|string)[]).map(v => Object.values(v))
+  #formatInsertData(
+    values: Record<string, number | string> | Record<string, number | string>[]
+  ) {
+    const keys: string[] = Array.isArray(values)
+      ? Object.keys(values[0])
+      : Object.keys(values);
+    const valueResult: (string | number)[] | (string | number)[][] = Array.isArray(
+      values
+    )
+      ? values.map((v) => Object.values(v))
+      : [Object.values(values)];
 
     return {
       keys,
-      values: valueResult
-    }
+      values: valueResult,
+    };
   }
 
-  #formatUpdateData(values: Record<string, number|string>): string[] {
-    return Object.keys(values).map(k => `${BuilderHelper.prepareStringValue(k, '`')} = ${BuilderHelper.prepareStringValue(values[k])}`);
+  #formatUpdateData(values: Record<string, number | string>): string[] {
+    return Object.keys(values).map(
+      (k) =>
+        `${BuilderHelper.prepareStringValue(
+          k,
+          "`"
+        )} = ${BuilderHelper.prepareStringValue(values[k])}`
+    );
   }
 }
 

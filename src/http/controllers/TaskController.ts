@@ -4,7 +4,7 @@ class TaskController {
   _taskService = require('../../services/TaskService');
 
   index(req: Request, res: Response) {
-    const tasks = this._taskService.getFilteredPaginator();
+    const tasks = this._taskService.find(1);
 
     console.log('tasks :>> ', tasks);
 

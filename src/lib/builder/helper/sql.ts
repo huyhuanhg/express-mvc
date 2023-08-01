@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 export default class BuilderHelper {
-  static prepareStringValue(value: string | number | (string | number)[], quote: '`' | '\'' = '`')
+  static prepareStringValue(value: string | number | (string | number)[], quote: '`' | '\'' = '\'')
   {
     if (typeof value === 'number') {
       return value;

@@ -25,8 +25,8 @@ class TaskService {
     return this._task.update(taskId, requestData);
   }
 
-  delete() {
-
+  delete(taskId: number) {
+    return this._task.delete(taskId);
   }
 }
 
