@@ -1,4 +1,10 @@
 import { Request, Response } from "express-serve-static-core";
+import Policy from '../../enums/Policy';
+import Status from '../../enums/Status';
+
+interface Test extends Request {
+  all: Function
+}
 
 class TaskController {
   _taskService = require('../../services/TaskService');
@@ -12,11 +18,28 @@ class TaskController {
   }
 
   create(req: Request, res: Response) {
-    res.render("task/create-or-edit");
+    res.render("task/create-or-edit", {
+      status: Status,
+      policies: Policy,
+    });
   }
 
   edit(req: Request, res: Response) {
-    res.render("task/create-or-edit");
+    res.render("task/create-or-edit", {
+      status: Status,
+      policies: Policy,
+      task: {}
+    });
+  }
+
+  store(req: Test, res: Response) {
+    console.log('req.body :>> ', req.body);
+    res.redirect('/task');
+  }
+
+  update(req: Request, res: Response) {
+    console.log('req.body :>> ', req.body);
+    res.redirect('/task');
   }
 }
 

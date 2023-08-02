@@ -8,7 +8,7 @@ export default class BuilderHelper {
     }
 
     if (! _.isArray(value)) {
-      return `${quote}${value.replace('\'', '\\\'').replace('\`', '\\\`')}${quote}`;
+      return `${quote}${value.replace(/(`|'|\\)/, '\\$1')}${quote}`;
     }
 
     return `(${value.map((v) => {
@@ -16,7 +16,7 @@ export default class BuilderHelper {
         return v;
       }
 
-      return `${quote}${v.replace('\'', '\\\'')}${quote}`;
+      return `${quote}${v.replace(/(`|'|\\)/, '\\$1')}${quote}`;
     }).join(', ')})`
   }
 }

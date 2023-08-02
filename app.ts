@@ -10,6 +10,10 @@ dotenv.config();
 // Initialize the express engine
 const app: express.Application = express();
 
+// Load body parse
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
+
 // Load static
 app.use(express.static(path.join(__dirname, "./src/public")));
 
