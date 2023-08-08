@@ -54,11 +54,11 @@ class TaskStoreValidationMiddleware {
       next();
     }
 
-    res.render("task/create-or-edit", {
-      errors: {
-        ...this._err,
-      },
-    });
+    req.session.errors = {
+      ...this._err
+    }
+
+    res.redirect("task/create");
   }
 }
 

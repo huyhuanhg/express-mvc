@@ -3,12 +3,26 @@ import express from "express";
 import dotenv from "dotenv";
 import { engine } from "express-handlebars";
 import path from "path";
+import session from "express-session";
+import livereload from "connect-livereload";
 
 // parse ENV
 dotenv.config();
 
 // Initialize the express engine
 const app: express.Application = express();
+
+app.use(session({
+  secret: "secret",
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+      secure: false,
+      maxAge: 6000000
+  }
+}));
+
+app.use(livereload())
 
 // Load body parse
 app.use(express.urlencoded({ extended: true }))

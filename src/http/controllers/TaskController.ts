@@ -12,8 +12,6 @@ class TaskController {
   index(req: Request, res: Response) {
     const tasks = this._taskService.find(1);
 
-    console.log('tasks :>> ', tasks);
-
     res.render("task", { tasks });
   }
 
