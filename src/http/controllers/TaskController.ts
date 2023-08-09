@@ -16,16 +16,26 @@ class TaskController {
   }
 
   create(req: Request, res: Response) {
+    const { errors, olds } = req.session
+
+    console.log('olds :>> ', olds);
+
     res.render("task/create-or-edit", {
       status: Status,
       policies: Policy,
+      errors,
+      olds
     });
   }
 
   edit(req: Request, res: Response) {
+    const { errors, olds } = req.session
+
     res.render("task/create-or-edit", {
       status: Status,
       policies: Policy,
+      errors,
+      olds,
       task: {}
     });
   }

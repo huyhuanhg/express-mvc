@@ -1,10 +1,11 @@
 // Import the express in typescript file
 import express from "express";
 import dotenv from "dotenv";
-import { engine } from "express-handlebars";
+import { create, ExpressHandlebars } from "express-handlebars";
 import path from "path";
 import session from "express-session";
 import livereload from "connect-livereload";
+import _ from "lodash";
 
 // parse ENV
 dotenv.config();
@@ -32,7 +33,36 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, "./src/public")));
 
 // Load engine
-app.engine(".hbs", engine({extname: '.hbs'}));
+const hbs = create({
+  extname: '.hbs',
+  // Specify helpers which are only registered on this instance.
+  helpers: {
+      err(field: string) {
+        if (_.isObject(this.errors) && this.errors.hasOwnProperty(field)) {
+          const errors: Record<string, string[]> = this.errors as Record<string, string[]>;
+          const result = errors[field].reduce((errHtml, error) => `${errHtml}\n<div class="error">${error}</div>`, '');
+          delete errors[field]
+
+          return result
+        }
+
+        return '';
+      },
+      old(field: string) {
+        if (_.isObject(this.olds) && this.olds.hasOwnProperty(field)) {
+          const olds: Record<string, any> = this.olds as Record<string, any>;
+          const result =  olds[field];
+          delete olds[field]
+
+          return result
+        }
+
+        return null;
+      }
+  }
+});
+
+app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "./src/resources/views"));
 
