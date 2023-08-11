@@ -12,7 +12,7 @@ class GlobalMiddleware extends Middleware {
       }
     }
 
-    next()
+    return next()
   }
 }
 

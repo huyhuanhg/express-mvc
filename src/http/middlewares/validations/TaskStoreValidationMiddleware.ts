@@ -23,6 +23,7 @@ class TaskStoreValidationMiddleware {
 
   validate(req: HttpRequest, res: Response, next: NextFunction) {
     const { name, policy, status, assigned_user_id, start_date, due_date } = req.body;
+    this._err = {}
 
     if (!name) {
       this._err.name = ["Name is required!"];
@@ -36,29 +37,31 @@ class TaskStoreValidationMiddleware {
       this._err.status = ["Status is required!"];
     }
 
-    if (typeof assigned_user_id !== 'number') {
+    if (assigned_user_id !== undefined && typeof assigned_user_id !== 'number') {
       this._err.assigned_user_id = ["Assigned User Id must be type number!"];
     }
 
     if (start_date) {
       req.body.start_date = moment(start_date);
+    } else {
+      req.body.start_date = null;
     }
 
     if (due_date) {
       req.body.due_date = moment(due_date);
+    } else {
+      req.body.due_date = null;
     }
 
-    // todo validate user
-
     if (_.isEmpty(this._err)) {
-      next();
+      return next();
     }
 
     req.session.errors = {
       ...this._err
     }
 
-    res.redirect("task/create");
+    return res.redirect("task/create");
   }
 }
 

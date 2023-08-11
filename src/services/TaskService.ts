@@ -6,11 +6,7 @@ class TaskService {
   }
 
   getFilteredPaginator(requestData: any) {
-    const count = this._task.count(requestData);
-    //TODO: get paginateInfo
-    const tasks = this._task.get(requestData);
-
-    return tasks;
+    return this._task.getFilteredPaginator(requestData);
   }
 
   find(taskId: number) {

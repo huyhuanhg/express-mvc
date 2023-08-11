@@ -1,0 +1,31 @@
+.e-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  &, tr, td, th {
+    border: 1px solid;
+  }
+
+  td, th {
+    padding: 5px;
+
+    &.action-col {
+      width: 120px;
+    }
+  }
+
+  .action-btn {
+    display: inline-flex;
+    font-size: 1rem;
+    width: fit-content;
+    padding: 0 10px;
+
+    &.edit-btn {
+      background: #ccba15;
+    }
+
+    &.delete-btn {
+      background: #cc2115;
+    }
+  }
+}

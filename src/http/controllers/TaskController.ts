@@ -1,24 +1,19 @@
+import { create } from 'express-handlebars';
 import { Request, Response } from "express-serve-static-core";
 import Policy from '../../enums/Policy';
 import Status from '../../enums/Status';
 
-interface Test extends Request {
-  all: Function
-}
-
 class TaskController {
   _taskService = require('../../services/TaskService');
 
-  index(req: Request, res: Response) {
-    const tasks = this._taskService.find(1);
+  async index(req: Request, res: Response) {
+    const tasks = await this._taskService.getFilteredPaginator(req.query);
 
-    res.render("task", { tasks });
+    return res.render("task", { tasks });
   }
 
   create(req: Request, res: Response) {
     const { errors, olds } = req.session
-
-    console.log('olds :>> ', olds);
 
     res.render("task/create-or-edit", {
       status: Status,
@@ -28,26 +23,29 @@ class TaskController {
     });
   }
 
-  edit(req: Request, res: Response) {
+  async edit(req: Request, res: Response) {
     const { errors, olds } = req.session
 
-    res.render("task/create-or-edit", {
+    const task = await this._taskService.find(req.params.taskId);
+
+    return res.render("task/create-or-edit", {
       status: Status,
       policies: Policy,
       errors,
       olds,
-      task: {}
+      task
     });
   }
 
-  store(req: Test, res: Response) {
-    console.log('req.body :>> ', req.body);
-    res.redirect('/task');
+  async store(req: Request, res: Response) {
+    await this._taskService.create(req.body)
+
+    return res.redirect('/task');
   }
 
   update(req: Request, res: Response) {
     console.log('req.body :>> ', req.body);
-    res.redirect('/task');
+    return res.redirect('/task');
   }
 }
 

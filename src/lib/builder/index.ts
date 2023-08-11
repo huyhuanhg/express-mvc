@@ -124,21 +124,24 @@ class DB implements WhereBuilderInterface {
     this.#offset = offset;
   }
 
-  count(select: string = "*") {
-    return this.#mysql(this.#connection).query(this.#parseGet(select));
+  async count(select: string = "*") {
+    const [result, field] = await this.#mysql(this.#connection).query(this.#parseGet(select));
+
+    return result[0][`COUNT(${select})`] || null;
   }
 
-  get() {
-    console.log('query :>> ', this.#parseGet());
-    // return this.#mysql(this.#connection).query(this.#parseGet());
+  async get() {
+    const [result, field] = await this.#mysql(this.#connection).query(this.#parseGet());
+
+    return result;
   }
 
-  insert(
+  async insert(
     values: Record<string, number | string> | Record<string, number | string>[]
   ) {
     const formatData: { keys: string[]; values: (string | number)[][] } =
       this.#formatInsertData(values);
-    console.log('formatData :>> ', formatData);
+
     const query = `INSERT INTO ${
       this.#table
     } ${BuilderHelper.prepareStringValue(
@@ -148,8 +151,9 @@ class DB implements WhereBuilderInterface {
       .map((v) => BuilderHelper.prepareStringValue(v))
       .join(", ")};`;
 
-      console.log('query :>> ', query);
-    // return this.#mysql(this.#connection).query(query);
+    const [result, field] = await this.#mysql(this.#connection).query(query);
+
+    return result;
   }
 
   update(values: Record<string, number | string>) {
@@ -158,9 +162,7 @@ class DB implements WhereBuilderInterface {
     const whereRaw = this.#whereBuilder.parse();
     const whereSql = whereRaw ? ` WHERE ${whereRaw}` : "";
 
-    const query = `UPDATE ${this.#table} SET ${formatData.join(
-      ", "
-    )}${whereSql};`;
+    const query = `UPDATE ${this.#table} SET ${formatData.join(", ")}${whereSql};`;
 
     console.log('query :>> ', query);
     // return this.#mysql(this.#connection).query(query);

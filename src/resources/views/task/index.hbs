@@ -57,9 +57,46 @@
   </div>
   <aside>
     <div class="header">
-      <input class="search" type="text" placeholder="Search job here" />
+      <input class="search" type="text" placeholder="Search task here" />
       <a href="/task/create" class="btn">Add</a>
     </div>
-    <article>{{test}}</article>
+    <article>
+      <div class="main-content">
+        <table class="e-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Policy</th>
+              <th>Status</th>
+              <th>Start date</th>
+              <th>Due date</th>
+              <th class="action-col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#with tasks}}
+              {{#each items}}
+                <tr>
+                  <td>{{this.id}}</td>
+                  <td>{{this.name}}</td>
+                  <td>{{this.policy}}</td>
+                  <td>{{this.status}}</td>
+                  <td>{{this.start_date}}</td>
+                  <td>{{this.due_date}}</td>
+                  <td class="action-col">
+                    <a class="btn action-btn edit-btn" href="/task/{{this.id}}/edit">Sửa</a>
+                    <button class="btn action-btn delete-btn">Xóa</button>
+                  </td>
+                </tr>
+              {{/each}}
+            {{/with}}
+          </tbody>
+        </table>
+        <div class="paginator">
+
+        </div>
+      </div>
+    </article>
   </aside>
 </section>

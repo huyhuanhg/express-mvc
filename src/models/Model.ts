@@ -45,15 +45,15 @@ class Model {
       this.filters(filters);
     }
 
-    return this._builder.count(["*"]);
+    return this._builder.count();
   }
 
-  find(id: number) {
+  async find(id: number) {
     if (this._softDelete) {
       this._builder.whereNull(this._softDelete);
     }
-
-    return this._builder.where(this._primary, id).get();
+    const items = await this._builder.where(this._primary, id).get()
+    return items[0] || null;
   }
 
   get(
@@ -85,6 +85,29 @@ class Model {
     }
 
     return this._builder.get();
+  }
+
+  async getFilteredPaginator(requestData: any) {
+    const count = await this.count(requestData);
+    const limit = requestData['limit'] || 15;
+
+    requestData = {
+      ...requestData,
+      limit,
+      offset: ((requestData['page'] || 1) - 1) * limit,
+    }
+
+    const items = await this.get(requestData);
+
+    return {
+      resources: {
+        total: count,
+        total_page: Math.ceil(count / limit),
+        current: requestData['page'] || 1,
+        limit
+      },
+      items
+    }
   }
 
   insert(
